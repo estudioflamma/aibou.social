@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AIBOU Aprovação Dezembro</title>
+<style>
+@font-face{font-family:"PP Frama Text";src:local("PP Frama Text Regular"),local("PPFramaText-Regular"),url("assets/PPFramaText-Regular.otf") format("opentype");font-weight:400;font-display:swap}
+:root{
+  --roxo:#9B7593;--azul:#7897AE;--bege:#CBB589;--preto:#0F1822;
+  --bg:#FFFFFF;--paper:#F5F3EE;--fg:#0F1822;--muted:#6B6F76;--line:#E4E1DA;--accent:#9B7593;
+  --ok:#3E7B5B;--okbg:#E6F0EA;--adj:#A0612B;--adjbg:#F6ECE2;
+  --frama:"PP Frama Text",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1822;--paper:#18222e;--fg:#F5F3EE;--muted:#A7ADB5;--line:#26313d;--accent:#C3A6BD;--okbg:#1d3328;--ok:#8FC9A8;--adjbg:#3a2a1c;--adj:#E2B184;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1822;--paper:#18222e;--fg:#F5F3EE;--muted:#A7ADB5;--line:#26313d;--accent:#C3A6BD;--okbg:#1d3328;--ok:#8FC9A8;--adjbg:#3a2a1c;--adj:#E2B184;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--frama);font-size:15.5px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-weight:400;margin:0;letter-spacing:-.04em;text-wrap:balance}
+p{margin:0}
+button,textarea,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.logo{display:block;fill:currentColor}
+.muted{color:var(--muted)}
+
+/* barra fixa */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:21;background:var(--bg)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:16px;height:60px}
+.bar .logo{width:72px}
+.bar nav{display:flex;gap:4px;margin-left:auto}
+.bar nav a{color:var(--fg);text-decoration:none;font-size:14px;padding:6px 12px;border-radius:999px}
+.bar nav a:hover{background:var(--paper)}
+.prog{font-size:13px;color:var(--muted);white-space:nowrap}
+.prog b{color:var(--fg);font-weight:400}
+
+/* hero */
+.hero{padding-block:56px 40px}
+.hero h1{font-size:clamp(40px,7vw,84px);line-height:1}
+.hero h1 span{color:var(--accent)}
+.hero p{font-size:18px;max-width:60ch;margin-top:20px;color:var(--muted)}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:36px}
+.how div{background:var(--paper);border-radius:18px;padding:18px 20px;font-size:14.5px}
+.how b{display:block;font-weight:400;font-size:13px;color:var(--muted);margin-bottom:6px}
+
+section{padding-block:48px}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:24px}
+.sec-head h2{font-size:clamp(30px,4.4vw,48px);line-height:1.05}
+
+/* feed */
+.profile{max-width:520px;margin:0 auto;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:var(--bg)}
+.pf-top{display:flex;align-items:center;gap:16px;padding:20px}
+.avatar{width:64px;height:64px;border-radius:50%;flex:none;display:block;object-fit:cover}
+.pf-top b{font-weight:400;font-size:16px;display:block}
+.pf-top span{font-size:13px;color:var(--muted)}
+.feed{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.tile{position:relative;aspect-ratio:4/5;background:var(--paper);overflow:hidden;border:0;padding:0;cursor:pointer;display:block}
+.tile img,.tile video{width:100%;height:100%;object-fit:cover;display:block}
+.tile .ic{position:absolute;top:8px;right:8px;width:18px;height:18px;color:#fff;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+.tile .pin{left:8px;right:auto}
+.tile .rl{position:absolute;top:7px;right:7px;display:flex;align-items:center;gap:4px;font-size:11px;padding:3px 8px 3px 6px;border-radius:999px;background:rgba(15,24,34,.62);color:#fff}
+.tile .rl svg{width:13px;height:13px;fill:currentColor}
+.badge-reels{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;background:var(--fg);color:var(--bg);font-size:12px}
+.tile .st{position:absolute;left:6px;bottom:6px;font-size:11px;padding:3px 8px;border-radius:999px;background:rgba(255,255,255,.92);color:#0F1822}
+.tile .st.ok{background:var(--okbg);color:var(--ok)}
+.tile .st.adj{background:var(--adjbg);color:var(--adj)}
+.tile:hover::after{content:"";position:absolute;inset:0;background:rgba(15,24,34,.12)}
+.feed-note{text-align:center;font-size:13px;color:var(--muted);margin-top:14px}
+
+/* posts */
+.post{display:grid;grid-template-columns:minmax(0,480px) minmax(0,1fr);gap:48px;padding-block:48px;border-top:1px solid var(--line);scroll-margin-top:70px}
+.viewer{position:relative}
+.track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;border-radius:16px;background:var(--paper);scrollbar-width:none}
+.track::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:start;aspect-ratio:4/5;position:relative}
+.slide img,.slide video{width:100%;height:100%;object-fit:cover;display:block}
+.slide .tn{position:absolute;top:10px;right:10px;font-size:12px;padding:3px 9px;border-radius:999px;background:rgba(15,24,34,.6);color:#fff}
+.nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#0F1822;cursor:pointer;display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.nav-btn[disabled]{opacity:0;pointer-events:none}
+.nav-btn.prev{left:10px}.nav-btn.next{right:10px}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:12px}
+.dots button{width:7px;height:7px;border-radius:50%;border:0;padding:0;background:var(--line);cursor:pointer}
+.dots button.on{background:var(--fg)}
+.ig-actions{display:flex;gap:14px;margin-top:-19px;padding:0 4px;pointer-events:none}
+.ig-actions svg{width:22px;height:22px}
+
+.info .meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;color:var(--muted)}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;color:#fff;font-size:12px}
+.info h3{font-size:clamp(26px,3.2vw,36px);line-height:1.08;margin-top:14px}
+.blk{margin-top:24px}
+.blk .lbl{font-size:12px;color:var(--muted);margin-bottom:6px}
+.leg{background:var(--paper);border-radius:16px;padding:18px 20px;white-space:pre-line;font-size:15px;line-height:1.55;position:relative}
+.leg.clip{max-height:190px;overflow:hidden}
+.leg.clip::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60px;background:linear-gradient(transparent,var(--paper));border-radius:0 0 16px 16px}
+.more{border:0;background:none;padding:6px 0;color:var(--accent);cursor:pointer;font-size:14px}
+
+.decide{margin-top:28px;border:1px solid var(--line);border-radius:18px;padding:18px}
+.decide .q{font-size:14px;color:var(--muted);margin-bottom:12px}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{text-decoration:none;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:10px 18px;cursor:pointer;font-size:15px;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{border-color:var(--fg)}
+.btn.ok.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn.adj.on{background:var(--adj);border-color:var(--adj);color:#fff}
+.btn.dark{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.adjbox{margin-top:16px;display:none}
+.adjbox.show{display:block}
+.adjrow{display:grid;grid-template-columns:130px 1fr 36px;gap:8px;margin-bottom:8px;align-items:start}
+select,textarea,input[type=text]{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:10px 12px;font-size:15px}
+textarea{resize:vertical;min-height:46px;line-height:1.4}
+.rm{border:0;background:var(--paper);border-radius:10px;height:44px;cursor:pointer;color:var(--muted)}
+.add{border:0;background:none;color:var(--accent);cursor:pointer;padding:4px 0;font-size:14px}
+.saved{font-size:12px;color:var(--muted);margin-top:8px;min-height:18px}
+
+/* devolutiva */
+.dev{background:var(--paper);border-radius:24px;padding:32px;margin-bottom:64px}
+.dev .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.summary{margin-top:24px;display:grid;gap:8px}
+.srow{display:flex;gap:12px;align-items:baseline;background:var(--bg);border-radius:14px;padding:12px 16px;font-size:14.5px;cursor:pointer;border:0;text-align:left;width:100%}
+.srow .n{color:var(--muted);width:24px;flex:none}
+.srow .t{flex:1}
+.srow .s{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--line);color:var(--muted);white-space:nowrap}
+.srow .s.ok{background:var(--okbg);color:var(--ok)}
+.srow .s.adj{background:var(--adjbg);color:var(--adj)}
+.send{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.hint{font-size:13px;color:var(--muted);margin-top:12px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--fg);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:50}
+.toast.show{opacity:1;transform:translateX(-50%)}
+footer{padding-block:32px 48px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:860px){
+  .post{grid-template-columns:1fr;gap:24px}
+  .how{grid-template-columns:1fr}
+  .dev .grid2{grid-template-columns:1fr}
+  .bar nav{display:none}
+  .prog{margin-left:auto}
+  .dev{padding:22px}
+  .adjrow{grid-template-columns:1fr 36px}
+  .adjrow select{grid-column:1/-1}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="170 355 1068 370"><path d="M 507.1875 711.011719 L 544.71875 711.011719 L 544.71875 368.996094 L 507.1875 368.996094 Z M 507.1875 711.011719 "/><path d="M 1139.640625 656.835938 C 1139.640625 669.691406 1150.066406 680.105469 1162.910156 680.105469 C 1175.769531 680.105469 1186.191406 669.691406 1186.191406 656.835938 L 1186.191406 368.992188 L 1223.714844 368.992188 L 1223.714844 656.835938 C 1223.714844 690.421875 1196.496094 717.636719 1162.910156 717.636719 C 1129.339844 717.636719 1102.109375 690.421875 1102.109375 656.835938 L 1102.109375 368.992188 L 1139.640625 368.992188 Z M 1139.640625 656.835938 "/><path d="M 308.90625 681.800781 C 253.960938 681.800781 209.417969 637.257812 209.417969 582.308594 C 209.417969 527.363281 253.960938 482.808594 308.90625 482.808594 C 363.855469 482.808594 408.398438 527.363281 408.398438 582.308594 C 408.398438 637.257812 363.855469 681.800781 308.90625 681.800781 M 481.382812 711.003906 L 395.664062 368.988281 L 276.195312 368.988281 L 276.195312 403.195312 L 365.5 403.195312 L 381.867188 468.28125 C 360.800781 454.761719 335.796875 446.824219 308.90625 446.824219 C 234.125 446.824219 173.496094 507.449219 173.496094 582.234375 C 173.496094 657.015625 234.125 717.644531 308.90625 717.644531 C 359.734375 717.644531 403.960938 689.597656 427.109375 648.183594 L 442.902344 711.003906 Z M 481.382812 711.003906 "/><path d="M 898.246094 685.9375 C 817.511719 685.9375 752.050781 620.488281 752.050781 539.742188 C 752.050781 459.003906 817.511719 393.558594 898.246094 393.558594 C 978.980469 393.558594 1044.441406 459.003906 1044.441406 539.742188 C 1044.441406 620.488281 978.980469 685.9375 898.246094 685.9375 M 898.246094 358.226562 C 797.859375 358.226562 716.46875 439.609375 716.46875 540.003906 C 716.46875 640.390625 797.859375 721.78125 898.246094 721.78125 C 998.632812 721.78125 1080.019531 640.390625 1080.019531 540.003906 C 1080.019531 439.609375 998.632812 358.226562 898.246094 358.226562 "/><path d="M 623.078125 673.398438 L 623.078125 552.742188 C 647.984375 550.214844 668.703125 578.453125 668.703125 612.988281 C 668.703125 647.535156 648.433594 675.503906 623.078125 673.398438 M 623.078125 404.136719 C 643.25 401.554688 659.171875 420.34375 659.171875 451.910156 C 659.171875 481.4375 638.976562 499.3125 623.078125 500.097656 Z M 658.574219 524.46875 C 682.910156 509.015625 694.820312 478.855469 694.820312 451.910156 C 694.820312 397.476562 663.25 368.992188 623.078125 368.992188 L 585.546875 368.992188 L 585.546875 711.007812 L 623.546875 711.007812 C 663.304688 711.007812 705.015625 674.457031 705.015625 613.074219 C 705.015625 572.097656 687.4375 541.621094 658.574219 524.46875 "/><path d="M 1222.828125 705.476562 L 1223.734375 705.476562 C 1224.597656 705.476562 1225.03125 705.050781 1225.03125 704.210938 C 1225.03125 703.417969 1224.597656 703.023438 1223.734375 703.023438 L 1222.828125 703.023438 Z M 1219.65625 712.433594 L 1219.65625 700.527344 L 1224.609375 700.527344 C 1225.710938 700.527344 1226.582031 700.808594 1227.226562 701.386719 C 1227.878906 701.957031 1228.195312 702.773438 1228.195312 703.832031 C 1228.195312 704.625 1228.019531 705.269531 1227.660156 705.773438 C 1227.3125 706.261719 1226.84375 706.601562 1226.253906 706.777344 L 1226.253906 706.839844 C 1227.53125 707.15625 1228.164062 708.128906 1228.164062 709.753906 L 1228.164062 712.433594 L 1224.96875 712.433594 L 1224.96875 709.9375 C 1224.96875 709.316406 1224.859375 708.867188 1224.640625 708.617188 C 1224.421875 708.355469 1224.074219 708.226562 1223.570312 708.226562 L 1222.828125 708.226562 L 1222.828125 712.433594 Z M 1215.675781 706.675781 C 1215.675781 708.3125 1216.015625 709.742188 1216.679688 710.960938 C 1217.355469 712.183594 1218.292969 713.121094 1219.492188 713.785156 C 1220.703125 714.460938 1222.121094 714.789062 1223.734375 714.789062 C 1225.347656 714.789062 1226.765625 714.460938 1227.976562 713.785156 C 1229.175781 713.121094 1230.113281 712.183594 1230.769531 710.960938 C 1231.421875 709.742188 1231.761719 708.3125 1231.761719 706.675781 C 1231.761719 705.03125 1231.421875 703.601562 1230.769531 702.390625 C 1230.113281 701.171875 1229.175781 700.222656 1227.976562 699.554688 C 1226.765625 698.890625 1225.347656 698.554688 1223.734375 698.554688 C 1222.121094 698.554688 1220.703125 698.890625 1219.492188 699.554688 C 1218.292969 700.222656 1217.355469 701.171875 1216.679688 702.390625 C 1216.015625 703.601562 1215.675781 705.03125 1215.675781 706.675781 M 1223.734375 717.636719 C 1221.574219 717.636719 1219.65625 717.175781 1217.976562 716.25 C 1216.300781 715.324219 1214.980469 714.039062 1214.019531 712.378906 C 1213.058594 710.734375 1212.578125 708.835938 1212.578125 706.675781 C 1212.578125 704.515625 1213.058594 702.609375 1214.019531 700.964844 C 1214.980469 699.316406 1216.300781 698.03125 1217.976562 697.101562 C 1219.65625 696.175781 1221.574219 695.707031 1223.734375 695.707031 C 1225.894531 695.707031 1227.804688 696.175781 1229.480469 697.101562 C 1231.148438 698.03125 1232.460938 699.316406 1233.417969 700.964844 C 1234.378906 702.609375 1234.859375 704.515625 1234.859375 706.675781 C 1234.859375 708.835938 1234.378906 710.734375 1233.417969 712.378906 C 1232.460938 714.039062 1231.148438 715.324219 1229.480469 716.25 C 1227.804688 717.175781 1225.894531 717.636719 1223.734375 717.636719 "/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path fill="currentColor" d="M15 3l6 6-2 2-1-1-4 4 .5 4.5L13 20l-4-4-5 5-1-1 5-5-4-4 1.5-1.5L10 10l4-4-1-1z"/></symbol>
+  <symbol id="i-multi" viewBox="0 0 24 24"><path fill="currentColor" d="M7 3h12a2 2 0 012 2v12h-2V5H7z"/><rect x="3" y="7" width="14" height="14" rx="2" fill="currentColor"/></symbol>
+  <symbol id="i-reels" viewBox="0 0 24 24"><path d="M6 3h12a3 3 0 013 3v12a3 3 0 01-3 3H6a3 3 0 01-3-3V6a3 3 0 013-3zm-1 5v10a1 1 0 001 1h12a1 1 0 001-1V8zm.6-2l2.2 3h3l-2.2-3zm5 0l2.2 3h3l-2.2-3zm5 0l2.2 3H19V7a1 1 0 00-1-1zM10 11.2v5.6l4.8-2.8z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></symbol>
+</svg>
+
+<header class="bar"><div class="wrap">
+  <svg class="logo" viewBox="0 0 1068 370" aria-label="AIBOU"><use href="#logo"/></svg>
+  <nav><a href="#feed">Feed</a><a href="#posts">Posts</a><a href="#devolutiva">Devolutiva</a></nav>
+  <span class="prog" id="prog"></span>
+</div></header>
+
+<main>
+<div class="wrap hero">
+  <h1>Dezembro no feed, <span>para aprovação.</span></h1>
+  <p>Aqui estão os 8 posts de dezembro. Primeiro, o feed completo. Depois, cada post com o carrossel, a legenda e o objetivo. Aprove ou peça ajuste em cada um e, no fim, baixe a devolutiva em PDF para mandar ao estúdio.</p>
+  <div class="how">
+    <div><b>1 · Veja o feed</b>Como o perfil fica com os posts de dezembro. Toque em um post para abrir.</div>
+    <div><b>2 · Revise post a post</b>Passe as telas do carrossel, leia a legenda e marque “Aprovado” ou “Pedir ajuste”.</div>
+    <div><b>3 · Baixe a devolutiva</b>No fim da página, baixe o PDF com o resumo e mande para o estúdio pelo WhatsApp.</div>
+  </div>
+</div>
+
+<section id="feed"><div class="wrap">
+  <div class="sec-head"><h2>O feed completo</h2></div>
+  <div class="profile">
+    <div class="pf-top"><img class="avatar" src="assets/avatar.png" alt="Foto de perfil da AIBOU" width="64" height="64"><div><b>aibou.club</b><span>Dezembro · 8 posts</span></div></div>
+    <div class="feed" id="feedGrid"></div>
+  </div>
+  <p class="feed-note">O fixado aparece primeiro. Depois, do post mais recente para o mais antigo, como no Instagram.</p>
+</div></section>
+
+<section id="posts"><div class="wrap">
+  <div class="sec-head"><h2>Post a post</h2></div>
+  <div id="postList"></div>
+</div></section>
+
+<section id="devolutiva"><div class="wrap">
+  <div class="dev">
+    <h2 style="font-size:clamp(30px,4.4vw,48px);line-height:1.05">Devolutiva</h2>
+    <p class="muted" style="margin-top:10px;max-width:60ch">Confira o resumo e deixe um comentário geral, se quiser. Depois baixe o PDF e mande para o estúdio pelo WhatsApp. Suas respostas ficam salvas neste navegador.</p>
+    <div class="grid2">
+      <div><div class="lbl muted" style="font-size:12px;margin-bottom:6px">Seu nome</div><input type="text" id="who" placeholder="Quem está aprovando"></div>
+      <div><div class="lbl muted" style="font-size:12px;margin-bottom:6px">Comentário geral (opcional)</div><textarea id="general" rows="1" placeholder="Algo sobre o mês como um todo"></textarea></div>
+    </div>
+    <div class="summary" id="summary"></div>
+    <div class="send">
+      <button class="btn dark" id="pdf">Baixar devolutiva em PDF</button>
+      <button class="btn" id="copy">Copiar texto</button>
+    </div>
+    <p class="hint" id="pending"></p>
+    <p class="hint" id="sent" role="status"></p>
+  </div>
+</div></section>
+</main>
+
+<footer class="wrap"><span>AIBOU · Social · Dezembro 2026</span><span>FLAMMA</span></footer>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+
+const MEDIA='feed-final/';
+const MP4=new Set(['01-2','01-3','01-4','01-6','01-7','02-1','02-2','02-4','03-1','04-5','05-2','05-3','05-4','05-5','05-7','06-1','06-3','06-4','08-1','08-2','08-3']);
+const TONE={roxo:'var(--roxo)',azul:'var(--azul)',bege:'var(--bege)'};
+
+const POSTS=[
+{n:'01',date:'01.12',linha:'Educacional',tone:'roxo',pinned:true,title:'Fixado · Mix feeding',fmt:'Carrossel',
+ telas:['Capa','O dilema','Mix feeding é combinar','Como começa','O que é a AIBOU','O que é a AIBOU · dados','A entrada'],
+ obj:'Ser a porta de entrada do perfil. Mostra que dá para incluir AIBOU na rotina sem trocar toda a alimentação do cão (o mix feeding) e termina com o convite para o Trial Pack.',
+ leg:'Comida de verdade pode entrar na rotina de diferentes formas. Com o mix feeding, você combina AIBOU e ração de acordo com as necessidades do seu cão. Comece conhecendo o nosso Trial Pack: são 6 latas, 3 sabores e a oportunidade de descobrir como ele recebe essa novidade. Se ele não comer, devolvemos o valor. Consulte as condições no site.'},
+{n:'02',date:'03.12',linha:'Educacional',tone:'azul',title:'Pílula 1 · Como montar o prato',fmt:'Carrossel',
+ telas:['Capa','Só AIBOU','Ração + AIBOU','AIBOU como complemento','Fechamento'],
+ obj:'Explicar, de forma simples e salvável, os três jeitos de servir AIBOU no bowl: sozinha, junto com a ração ou como complemento.',
+ leg:'Um bowl, diferentes possibilidades. A AIBOU pode ser servida como refeição completa, combinada com ração ou como complemento. O importante é considerar as necessidades do seu cão e ajustar a alimentação com orientação profissional.'},
+{n:'03',date:'08.12',linha:'Produto',tone:'bege',title:'Produto · Zoom, textura e ingredientes',fmt:'Reels',reels:true,
+ telas:['Lata e alimento'],
+ obj:'Peça sensorial, com a lata e o alimento como protagonistas. A imagem conta a história sozinha, sem texto na arte.',
+ leg:'O cuidado está em cada detalhe. Inclusive naquilo que você escolhe servir.'},
+{n:'04',date:'10.12',linha:'Educacional',tone:'azul',title:'Pílula 2 · Quanto servir por porte',fmt:'Carrossel',
+ telas:['Capa','Só AIBOU','AIBOU + ração','Complemento','Fechamento'],
+ obj:'Dar a referência de quantidade diária por peso e por jeito de servir. É o post de consulta do mês, feito para salvar.',
+ leg:'O tamanho da porção depende do porte, da rotina e da forma como a AIBOU entra na alimentação. Para ajustar a quantidade à realidade do seu cão, consulte nosso time e siga a orientação do veterinário.'},
+{n:'05',date:'15.12',linha:'Aibou & Friends',tone:'bege',title:'Aibou & Friends · Daniel Toloto',fmt:'Carrossel',
+ telas:['Capa','Citação 1','Mídia do Daniel','Citação 2','Mídia do Daniel','Citação 3','Vídeo'],
+ obj:'Contar a história de um parceiro real e mostrar a AIBOU na rotina de quem vive com os cães na estrada. É o template fixo do quadro, um por mês.',
+ leg:`Esse é o Dani. Mas, como ele mesmo diz, não tem como falar do Dani sem falar das suas companheiras de vida: Bisteca e Panda.
+
+Dani é programador há cerca de 10 anos, apaixonado por viajar, conhecer lugares novos, tomar um bom café e viver experiências que o tirem um pouquinho da bolha.
+
+Há pouco mais de um ano, decidiu tirar do papel uma ideia um tanto quanto inusitada: construir seu próprio motorhome para viajar pela América do Sul com as duas cachorras. Depois de muito trabalho, alguns perrengues e aprendizados pelo caminho, os três finalmente pegaram a estrada!
+
+Bisteca, uma Border Collie, parece ter uma bateria infinita. É elétrica, curiosa e quer participar de tudo. Panda já é o contraponto: mais tranquila, tem seu próprio ritmo e parece levar a vida de um jeito que o Dani ainda está tentando aprender. Hahaha.
+
+Com a casa sobre rodas, a rotina mudou. O quintal agora muda constantemente, e cada dia pode trazer uma paisagem nova, uma praia, uma estrada ou até mesmo um dia de chuva dentro do motorhome. E é justamente essa vida acontecendo, com as partes bonitas e os pequenos perrengues, que ele gosta de compartilhar.
+
+Ter as duas como parceiras também mudou a forma como Dani enxerga as viagens. Hoje, o conforto delas faz parte de cada planejamento: são mais paradas, respeito ao tempo de cada uma e atenção a detalhes que talvez passassem despercebidos se estivesse sozinho.
+
+Foi nesse novo capítulo que a AIBOU chegou. Em uma rotina na qual tanta coisa muda o tempo todo, Dani encontrou na alimentação natural uma forma de cuidar das duas sem abrir mão da praticidade que a vida na estrada exige.
+
+Afinal, proporcionar experiências incríveis também significa garantir que Bisteca e Panda estejam bem e saudáveis para viver tudo isso ao lado dele.
+
+No fim, são três seres completamente diferentes, dividindo uma casinha sobre rodas, aprendendo a conviver, conhecendo o mundo e descobrindo juntos onde vão parar.`},
+{n:'06',date:'17.12',linha:'Educacional',tone:'azul',title:'Pílula 3 · A transição, com calma',fmt:'Carrossel',
+ telas:['Capa','Toda mudança começa aos poucos','Observe','Aos poucos','Uma mudança de cada vez','Fechamento'],
+ obj:'Orientar a introdução gradual da AIBOU, com o passo a passo da transição em 7 dias do flyer oficial e o que observar no cão durante o processo.',
+ leg:'Uma novidade no bowl pode começar aos poucos. Durante a introdução da AIBOU, respeite o ritmo do seu cão e observe como ele reage à mudança. Cada animal tem suas particularidades, por isso a transição e as quantidades devem ser ajustadas com orientação profissional.'},
+{n:'07',date:'21.12',linha:'Universo',tone:'roxo',title:'Universo AIBOU · Foto + frase',fmt:'Estático',
+ telas:['Foto com frase'],
+ obj:'Um respiro de marca no grid: uma cena real de convivência em casa, com o produto aparecendo com naturalidade e uma frase curta.',
+ leg:'A vida acontece nos detalhes da rotina. E uma boa refeição também faz parte dela.'},
+{n:'08',date:'23.12',linha:'Educacional',tone:'azul',title:'Pílula 4 · O que tem dentro de uma lata',fmt:'Carrossel',
+ telas:['Capa','As proteínas','A base','A composição','Fechamento'],
+ obj:'Mostrar a composição dos três sabores, com ingredientes que a pessoa reconhece olhando.',
+ leg:'Abra uma lata e olhe de perto: ingredientes, cores e texturas fazem parte da experiência AIBOU. Comida de verdade, com cada detalhe à vista.'}
+];
+
+/* ---------- estado ---------- */
+const KEY='aibou-aprovacao-dez-2026';
+let S={};
+try{S=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){S={}}
+S.posts=S.posts||{};
+const st=n=>S.posts[n]||(S.posts[n]={status:'',adj:[]});
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const key=(p,i)=>`${p.n}-${i}`;
+const media=(k,lazy)=>MP4.has(k)
+  ?`<video src="${MEDIA}mp4/${k}.mp4" poster="${MEDIA}jpg/${k}.jpg" muted loop playsinline preload="${lazy?'none':'metadata'}"></video>`
+  :`<img src="${MEDIA}jpg/${k}.jpg" alt="" loading="lazy" decoding="async">`;
+
+/* ---------- feed ---------- */
+const order=[...POSTS.filter(p=>p.pinned),...POSTS.filter(p=>!p.pinned).slice().reverse()];
+function renderFeed(){
+  document.getElementById('feedGrid').innerHTML=order.map(p=>{
+    return `<a class="tile" href="#post-${p.n}" aria-label="${p.date} · ${esc(p.title)}${p.reels?' · Reels':''}"><img src="${MEDIA}jpg/${key(p,1)}.jpg" alt="" loading="lazy" decoding="async">
+      ${p.pinned?'<svg class="ic pin"><use href="#i-pin"/></svg>':''}
+      ${p.reels?'<span class="rl"><svg><use href="#i-reels"/></svg>Reels</span>':(p.telas.length>1?'<svg class="ic"><use href="#i-multi"/></svg>':'')}
+</a>`}).join('');
+}
+
+/* ---------- posts ---------- */
+function renderPosts(){
+  document.getElementById('postList').innerHTML=POSTS.map(p=>{
+    const n=p.telas.length;
+    const slides=p.telas.map((t,i)=>`<div class="slide" data-i="${i}">${media(key(p,i+1),true)}${n>1?`<span class="tn">${i+1}/${n}</span>`:''}</div>`).join('');
+    return `<article class="post" id="post-${p.n}" data-n="${p.n}">
+      <div class="viewer">
+        <div class="track">${slides}</div>
+        ${n>1?`<button class="nav-btn prev" aria-label="Tela anterior">‹</button><button class="nav-btn next" aria-label="Próxima tela">›</button><div class="dots">${p.telas.map((t,i)=>`<button aria-label="Tela ${i+1}"${i?'':' class="on"'}></button>`).join('')}</div>`:''}
+      </div>
+      <div class="info">
+        <div class="meta"><span class="pill" style="background:${TONE[p.tone]}">${p.linha}</span>${p.reels?'<span class="badge-reels">Reels</span>':''}${p.date}${p.pinned?' · fixado':''}${p.reels?'':` · ${p.fmt}`}${n>1?` · ${n} telas`:''}</div>
+        <h3>${p.n} · ${esc(p.title)}</h3>
+        <div class="blk"><div class="lbl">Objetivo</div><p>${esc(p.obj)}</p></div>
+        <div class="blk"><div class="lbl">Legenda</div><div class="leg${p.leg.length>420?' clip':''}">${esc(p.leg)}</div>${p.leg.length>420?'<button class="more">Ler legenda completa</button>':''}</div>
+        <div class="decide">
+          <div class="q">Como está este post?</div>
+          <div class="btns"><button class="btn ok" data-a="ok">✓ Aprovado</button><button class="btn adj" data-a="adj">Pedir ajuste</button></div>
+          <div class="adjbox">
+            <div class="lbl muted" style="font-size:12px;margin-bottom:8px">O que ajustar? Escolha a tela e descreva.</div>
+            <div class="adjs"></div>
+            <button class="add">+ adicionar outro ajuste</button>
+          </div>
+          <div class="saved"></div>
+        </div>
+      </div>
+    </article>`}).join('');
+  document.querySelectorAll('.post').forEach(initPost);
+}
+function adjRow(p,a,idx){
+  const opts=['Geral',...p.telas.map((t,i)=>`Tela ${i+1} · ${t}`),'Legenda'];
+  return `<div class="adjrow" data-idx="${idx}"><select aria-label="Onde">${opts.map(o=>`<option${o===a.where?' selected':''}>${esc(o)}</option>`).join('')}</select><textarea rows="2" placeholder="Descreva o ajuste">${esc(a.text||'')}</textarea><button class="rm" aria-label="Remover ajuste">×</button></div>`;
+}
+function initPost(el){
+  const p=POSTS.find(x=>x.n===el.dataset.n),s=st(p.n);
+  const track=el.querySelector('.track'),dots=[...el.querySelectorAll('.dots button')],prev=el.querySelector('.prev'),next=el.querySelector('.next');
+  const cur=()=>Math.round(track.scrollLeft/track.clientWidth);
+  const go=i=>track.scrollTo({left:i*track.clientWidth,behavior:'smooth'});
+  const sync=()=>{const i=cur();dots.forEach((d,j)=>d.classList.toggle('on',j===i));if(prev){prev.disabled=i===0;next.disabled=i===p.telas.length-1}
+    track.querySelectorAll('.slide').forEach((sl,j)=>{const v=sl.querySelector('video');if(!v)return;if(j===i&&inView(el)){v.preload='auto';v.play().catch(()=>{})}else v.pause()})};
+  track.addEventListener('scroll',()=>{clearTimeout(track._t);track._t=setTimeout(sync,80)},{passive:true});
+  dots.forEach((d,i)=>d.onclick=()=>go(i));
+  if(prev){prev.onclick=()=>go(cur()-1);next.onclick=()=>go(cur()+1)}
+  el._sync=sync;sync();
+  const more=el.querySelector('.more');if(more)more.onclick=()=>{el.querySelector('.leg').classList.remove('clip');more.remove()};
+
+  const box=el.querySelector('.adjbox'),list=el.querySelector('.adjs'),saved=el.querySelector('.saved');
+  const paint=()=>{el.querySelectorAll('.btns .btn').forEach(b=>b.classList.toggle('on',b.dataset.a===s.status));box.classList.toggle('show',s.status==='adj');
+    saved.textContent=s.status==='ok'?'Marcado como aprovado.':s.status==='adj'?'Ajustes salvos neste navegador.':''};
+  const drawAdj=()=>{if(!s.adj.length)s.adj.push({where:'Geral',text:''});list.innerHTML=s.adj.map((a,i)=>adjRow(p,a,i)).join('')};
+  el.querySelectorAll('.btns .btn').forEach(b=>b.onclick=()=>{s.status=s.status===b.dataset.a?'':b.dataset.a;if(s.status==='adj'){drawAdj();setTimeout(()=>list.querySelector('textarea')?.focus(),50)}save();paint();refresh()});
+  list.addEventListener('input',e=>{const r=e.target.closest('.adjrow');if(!r)return;const a=s.adj[+r.dataset.idx];if(e.target.tagName==='SELECT')a.where=e.target.value;else a.text=e.target.value;save();refreshSummary()});
+  list.addEventListener('change',e=>{const r=e.target.closest('.adjrow');if(r&&e.target.tagName==='SELECT'){s.adj[+r.dataset.idx].where=e.target.value;save();refreshSummary()}});
+  list.addEventListener('click',e=>{const b=e.target.closest('.rm');if(!b)return;s.adj.splice(+b.parentElement.dataset.idx,1);drawAdj();save();refreshSummary()});
+  el.querySelector('.add').onclick=()=>{const i=cur();s.adj.push({where:p.telas.length>1?`Tela ${i+1} · ${p.telas[i]}`:'Geral',text:''});drawAdj();save();list.querySelectorAll('textarea')[s.adj.length-1].focus()};
+  if(s.status==='adj')drawAdj();
+  paint();
+}
+
+/* ---------- vídeos: tocam só quando visíveis ---------- */
+const inView=el=>{const r=el.getBoundingClientRect();return r.bottom>0&&r.top<innerHeight};
+let io=null;
+if('IntersectionObserver' in window){
+  io=new IntersectionObserver(es=>es.forEach(e=>{
+    const t=e.target;
+    if(t.tagName==='VIDEO'){if(e.isIntersecting){t.preload='auto';t.play().catch(()=>{})}else t.pause()}
+    else if(t._sync){t._sync()}
+  }),{threshold:.35});
+}
+function observe(list){if(io)list.forEach(v=>io.observe(v))}
+
+/* ---------- devolutiva ---------- */
+function refresh(){renderFeed();refreshSummary()}
+function refreshSummary(){
+  const done=POSTS.filter(p=>st(p.n).status).length;
+  document.getElementById('prog').innerHTML=`<b>${done}</b> de ${POSTS.length} revisados`;
+  document.getElementById('summary').innerHTML=POSTS.map(p=>{const s=st(p.n);const adj=s.adj.filter(a=>a.text.trim());
+    return `<button class="srow" data-go="${p.n}"><span class="n">${p.n}</span><span class="t">${esc(p.title)}${s.status==='adj'&&adj.length?`<br><span class="muted" style="font-size:13px">${adj.map(a=>esc(a.where.split(' · ')[0])+': '+esc(a.text.trim())).join(' · ')}</span>`:''}</span><span class="s ${s.status}">${s.status==='ok'?'Aprovado':s.status==='adj'?`Ajuste${adj.length>1?` (${adj.length})`:''}`:'Pendente'}</span></button>`}).join('');
+  document.querySelectorAll('.srow').forEach(r=>r.onclick=()=>document.getElementById('post-'+r.dataset.go).scrollIntoView({behavior:'smooth'}));
+  const pend=POSTS.length-done;
+  document.getElementById('pending').textContent=pend?`Faltam ${pend} post${pend>1?'s':''} sem resposta. Você pode baixar assim mesmo.`:'Tudo revisado. É só baixar o PDF.';
+}
+function text(){
+  const who=document.getElementById('who').value.trim(),gen=document.getElementById('general').value.trim();
+  const L=['AIBOU · Devolutiva dos posts de dezembro'+(who?` · ${who}`:''),''];
+  POSTS.forEach(p=>{const s=st(p.n);const adj=s.adj.filter(a=>a.text.trim());
+    L.push(`${p.n} · ${p.title} (${p.date}): ${s.status==='ok'?'APROVADO':s.status==='adj'?'PEDIR AJUSTE':'sem resposta'}`);
+    if(s.status==='adj')adj.forEach(a=>L.push(`   - ${a.where}: ${a.text.trim()}`));});
+  if(gen){L.push('','Comentário geral:',gen)}
+  return L.join('\n');
+}
+const toast=m=>{const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200)};
+['who','general'].forEach(id=>{const el=document.getElementById(id);el.value=S[id]||'';el.oninput=()=>{S[id]=el.value;save();refreshSummary()}});
+document.getElementById('copy').onclick=async()=>{try{await navigator.clipboard.writeText(text());toast('Devolutiva copiada')}catch(e){const ta=document.createElement('textarea');ta.value=text();document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('Devolutiva copiada')}};
+
+/* ---------- devolutiva em PDF ---------- */
+const sentEl=document.getElementById('sent'),pdfBtn=document.getElementById('pdf');
+const W1252=new Set([0x20AC,0x201A,0x0192,0x201E,0x2026,0x2020,0x2021,0x02C6,0x2030,0x0160,0x2039,0x0152,0x017D,0x2018,0x2019,0x201C,0x201D,0x2022,0x2013,0x2014,0x02DC,0x2122,0x0161,0x203A,0x0153,0x017E,0x0178]);
+const FR={'½':'1/2','¼':'1/4','¾':'3/4','⅓':'1/3','⅔':'2/3'};
+const clean=t=>String(t).replace(/(\d)?([½¼¾⅓⅔])/g,(m,d,f)=>(d?d+' ':'')+FR[f]).replace(/→/g,'->')
+  .split('').filter(c=>{const k=c.charCodeAt(0);return k===10||(k>=32&&k<=255)||W1252.has(k)}).join('');
+const loadImg=src=>new Promise((ok,no)=>{const im=new Image();im.onload=()=>ok(im);im.onerror=no;im.src=src});
+async function toJpeg(src,w){const im=await loadImg(src);const c=document.createElement('canvas');c.width=w;c.height=Math.round(w*im.naturalHeight/im.naturalWidth);c.getContext('2d').drawImage(im,0,0,c.width,c.height);return c.toDataURL('image/jpeg',.82)}
+async function logoPng(){const sym=document.getElementById('logo');const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="170 355 1068 370" width="1068" height="370"><g fill="#0F1822">${sym.innerHTML}</g></svg>`;
+  const im=await loadImg('data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg));const c=document.createElement('canvas');c.width=1068;c.height=370;c.getContext('2d').drawImage(im,0,0);return c.toDataURL('image/png')}
+async function buildPdf(){
+  const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});
+  const M=18,PW=210,PH=297,CW=PW-2*M;let y=M;
+  const C={ink:[15,24,34],muted:[107,111,118],line:[228,225,218],paper:[245,243,238],ok:[62,123,91],adj:[160,97,43],roxo:[155,117,147]};
+  const col=c=>doc.setTextColor(...c);
+  const who=document.getElementById('who').value.trim(),gen=document.getElementById('general').value.trim();
+  const now=new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  const foot=()=>{doc.setFontSize(8);col(C.muted);doc.text(clean('AIBOU · Devolutiva dos posts de dezembro'),M,PH-10);doc.text(String(doc.getNumberOfPages()),PW-M,PH-10,{align:'right'})};
+  const need=h=>{if(y+h>PH-18){foot();doc.addPage();y=M}};
+  try{doc.addImage(await logoPng(),'PNG',M,y,36,12.5)}catch(e){doc.setFontSize(20);col(C.ink);doc.text('AIBOU',M,y+10)}
+  doc.setFontSize(9);col(C.muted);doc.text(clean(now),PW-M,y+5,{align:'right'});
+  y+=24;doc.setFontSize(22);col(C.ink);doc.text(clean('Devolutiva · Posts de dezembro'),M,y);
+  y+=8;doc.setFontSize(10.5);col(C.muted);doc.text(clean(who?`Revisado por ${who}`:'Revisado pelo cliente'),M,y);
+  const cnt={ok:0,adj:0,none:0};POSTS.forEach(p=>{const s=st(p.n).status;cnt[s||'none']++});
+  y+=10;const boxes=[[`${cnt.ok}`,'aprovados',C.ok],[`${cnt.adj}`,'com ajuste',C.adj],[`${cnt.none}`,'sem resposta',C.muted]];
+  const bw=(CW-8)/3;boxes.forEach(([n,l,c],i)=>{const x=M+i*(bw+4);doc.setFillColor(...C.paper);doc.roundedRect(x,y,bw,18,3,3,'F');doc.setFontSize(18);col(c);doc.text(n,x+5,y+11.5);doc.setFontSize(9.5);col(C.muted);doc.text(clean(l),x+16,y+11)});
+  y+=28;
+  for(const p of POSTS){
+    const s=st(p.n),adj=s.adj.filter(a=>a.text.trim());
+    doc.setFontSize(10);const lines=adj.map(a=>doc.splitTextToSize(clean(a.text.trim()),CW-40-4));
+    const adjH=lines.reduce((h,l)=>h+5+l.length*4.6,0);
+    const h=Math.max(40,22+adjH);need(h+6);
+    const thumbW=28,thumbH=35;
+    try{doc.addImage(await toJpeg(`${MEDIA}jpg/${key(p,1)}.jpg`,280),'JPEG',M,y,thumbW,thumbH)}catch(e){doc.setFillColor(...C.paper);doc.rect(M,y,thumbW,thumbH,'F')}
+    const x=M+thumbW+8;
+    doc.setFontSize(9);col(C.muted);doc.text(clean(`${p.date} · ${p.linha}${p.reels?' · Reels':''} · ${p.telas.length>1?p.telas.length+' telas':'1 tela'}`),x,y+4);
+    doc.setFontSize(13);col(C.ink);doc.text(clean(`${p.n} · ${p.title}`),x,y+10.5,{maxWidth:CW-thumbW-8-34});
+    const [lab,c]=s.status==='ok'?['Aprovado',C.ok]:s.status==='adj'?['Pedir ajuste',C.adj]:['Sem resposta',C.muted];
+    doc.setFontSize(9);const tw=doc.getTextWidth(lab)+8;doc.setDrawColor(...c);doc.setFillColor(...c);
+    if(s.status)doc.roundedRect(PW-M-tw,y,tw,7,3.5,3.5,'F');else doc.roundedRect(PW-M-tw,y,tw,7,3.5,3.5,'S');
+    col(s.status?[255,255,255]:c);doc.text(lab,PW-M-tw/2,y+4.8,{align:'center'});
+    let yy=y+18;
+    if(s.status==='adj'){adj.forEach((a,i)=>{doc.setFontSize(8.5);col(C.adj);doc.text(clean(a.where).toUpperCase(),x,yy);yy+=4.6;doc.setFontSize(10);col(C.ink);doc.text(lines[i],x,yy);yy+=lines[i].length*4.6+1.5});
+      if(!adj.length){doc.setFontSize(10);col(C.muted);doc.text(clean('Ajuste pedido sem descrição.'),x,yy)}}
+    y+=h;doc.setDrawColor(...C.line);doc.line(M,y,PW-M,y);y+=6;
+  }
+  if(gen){doc.setFontSize(10);const gl=doc.splitTextToSize(clean(gen),CW);need(12+gl.length*4.8);doc.setFontSize(9);col(C.muted);doc.text(clean('Comentário geral'),M,y+2);doc.setFontSize(11);col(C.ink);doc.text(gl,M,y+9);y+=12+gl.length*4.8}
+  foot();return doc.output('blob');
+}
+pdfBtn.onclick=async()=>{
+  if(!window.jspdf){sentEl.textContent='O gerador de PDF não carregou. Confira a internet e tente de novo, ou use “Copiar texto”.';return}
+  pdfBtn.disabled=true;pdfBtn.textContent='Gerando PDF…';
+  const d=new Date(),name=`AIBOU_devolutiva_dezembro_${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}.pdf`;
+  try{
+    const blob=await buildPdf();
+    let dl=null;try{dl=window.claude&&claude.use?await claude.use('downloads'):null}catch(e){}
+    if(dl){try{await dl.save({filename:name,data:blob});sentEl.textContent='PDF baixado. Agora é só mandar para o estúdio pelo WhatsApp.';toast('PDF pronto')}
+      catch(e){sentEl.textContent=e&&e.code==='declined'?'Download cancelado. Clique de novo quando quiser.':'Não foi possível baixar aqui. Use “Copiar texto” e cole no WhatsApp.'}}
+    else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);sentEl.textContent='PDF baixado. Agora é só mandar para o estúdio pelo WhatsApp.'}
+  }catch(e){sentEl.textContent='Não foi possível gerar o PDF. Use “Copiar texto” e cole no WhatsApp.'}
+  finally{pdfBtn.disabled=false;pdfBtn.textContent='Baixar devolutiva em PDF'}
+};
+
+renderPosts();refresh();
+if(io)document.querySelectorAll('.post').forEach(p=>io.observe(p));
+</script>
+</body>
+</html>
